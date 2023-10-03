@@ -1,0 +1,126 @@
+.box {
+  /* border: 1px solid black;  */
+  width: 600px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-left: 250px;
+}
+.one {
+  width: 250px;
+  height: 100px;
+  background-color: whitesmoke;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: rgba(2, 30, 82, 0.1) 0px 4px 12px;
+  cursor: pointer;
+}
+.two {
+  width: 250px;
+  height: 100px;
+  background-color: whitesmoke;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: rgba(2, 30, 82, 0.1) 0px 4px 12px;
+  cursor: pointer;
+}
+/* In your CSS file */
+.EmployeeTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.EmployeeTable th,
+.EmployeeTable td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: left;
+  /* font-family: monospace ; */
+  font-family: Consolas, monaco, monospace;
+  font-weight: 300;
+}
+
+.EmployeeTable th {
+  background-color: gray;
+  color: white;
+}
+
+.EmployeeTable tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.435);
+}
+
+.EmployeeTable img {
+  max-width: 100px;
+  max-height: 100px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: black;
+  }
+  
+  input[type="text"]:focus {
+    outline: none; /* Remove the default focus outline */
+/* border-color: #007BFF;
+  }  */
+/* -------------student details------- */
+
+/* Add this to your CSS file */
+
+.student-details {
+  display: flex;
+  align-items: center; /* Vertically center the photo */
+  border: 1px solid red;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.student-photo {
+  flex: 1; /* Takes up one-third of the available space */
+  text-align: center;
+}
+
+.student-info {
+  flex: 2; /* Takes up two-thirds of the available space */
+  padding-left: 20px; /* Add spacing between photo and info */
+}
+.bold-text {
+  font-weight: bold;
+}
+.editbtn {
+  background-color: rgb(81, 206, 35);
+  border: none;
+  width: 50px;
+height: 20px;
+
+}
+.viewbtn {
+  background-color: lightskyblue;
+  border: none;
+  width: 50px;
+height: 20px;
+}
+.deletebtn {
+  background-color: rgb(240, 65, 65);
+  border: none;
+width: 50px;
+height: 20px;
+}
+/* button {
+  background-color: pink;
+} */

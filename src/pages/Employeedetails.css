@@ -1,0 +1,150 @@
+.Container {
+  max-width: auto;
+  margin: 0 auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.435);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+
+  /* font-family: monospace ; */
+  /* font-family: Consolas, monaco, monospace; */
+}
+
+h2 {
+  color: black;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 400;
+}
+.box {
+  /* border: 1px solid black;  */
+  width: 600px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-left: 250px;
+}
+.one {
+  width: 250px;
+  height: 100px;
+  background-color: whitesmoke;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: rgba(2, 30, 82, 0.1) 0px 4px 12px;
+  cursor: pointer;
+}
+.two {
+  width: 250px;
+  height: 100px;
+  background-color: whitesmoke;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: rgba(2, 30, 82, 0.1) 0px 4px 12px;
+  cursor: pointer;
+}
+.one h2 {
+  font-size: 20px;
+  /* margin-right: -280px; */
+  /* margin-top: -10px; */
+  color: black;
+}
+.two h2 {
+  font-size: 20px;
+  /* margin-right: -280px; */
+  /* margin-top: -10px; */
+  color: black;
+}
+
+
+
+label {
+  
+  display: inline-block;
+  width: 15%;
+  margin-top: 10px;
+  color: black;
+  font-weight: bold;
+}
+/* label {
+  display: inline-block;
+  width: 150px;
+  width: 15%;
+
+  font-weight: bold;
+  text-align: right;
+  padding-right: 50px;
+  font-size: 18px;
+} */
+
+/* input {
+  padding: 12px 10px 12px;
+  margin-bottom: 5px;
+  outline: none;
+  width: 800px;
+} */
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="tel"],
+textarea {
+  display: inline-block;
+  /* width: 95%; */
+  width: 75%;
+  padding: 10px;
+  margin-top: 10px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.2);
+  color: black;
+  outline: none;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+button[type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 5px;
+  background: black;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: "Roboto", sans-serif;
+}
+
+div[name="qualification"] {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+input[type="radio"] {
+  margin-right: 5px;
+}
+
+label input[type="radio"]::after {
+  content: " ";
+}
+
+input[type="radio"]:checked + label {
+  color: #007bff;
+}
+

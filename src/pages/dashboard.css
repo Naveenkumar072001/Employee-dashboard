@@ -1,0 +1,125 @@
+/* .dashboard{
+    margin-left: 30px;
+}
+
+.dashboard h1{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 400;
+
+}
+.EmployeeCount {
+    background-color: #1DB954;
+    width: 180px;
+    height: 100px;
+    color: white;
+    padding: 10px;
+   margin-top: 15px;
+    border-radius: 5px;
+
+  }
+  
+  .EmployeeCount h4 {
+    margin-top: 20px;
+    font-size: 30px;
+    font-family: monospace;
+    font-weight: 200;
+  }
+  .EmployeeCount p {
+    margin: 5px 0;
+    font-size: 30px;
+  }
+  .EmployeeCount .pic{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    margin-left: 120px;
+    margin-top: -94px;
+    border-radius: 50px;
+  } */
+
+/* dashboard.css */
+body {
+  background: whitesmoke;
+}
+.dashboard {
+  text-align: center;
+  padding-top: -100px;
+}
+
+.dashboardbox {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  /* gap: 20px; */
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  /* border: 1px solid rgba(128, 128, 128, 0.217); */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 500px;
+  background-color: rgba(255, 255, 255, 0.435);
+}
+
+.EmployeeCount {
+  background-color: #f5f5f548;
+  padding: 20px 0px 60px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* text-align: left; */
+  width: 450px;
+  height:100px;
+  margin-left: 70px;
+}
+#one {
+  background-color: rgba(72, 118, 230, 255);
+}
+#two {
+  background-color: rgba(124, 197, 250, 255);
+}
+#three {
+  background-color: rgba(158, 113, 206, 255);
+}
+#four {
+  background-color: rgba(132, 209, 179, 255);
+}
+.EmployeeCount p {
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 20;
+  margin-top: 10px;
+
+  color:white;
+}
+
+.EmployeeCount h4 {
+  font-size: 25px;
+  margin-top: 8px;
+  margin-left: 20;
+  margin-top: 10px;
+  color:white;
+
+}
+
+.pic {
+  max-width: 100px;
+  height: auto;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .dashboardbox {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .EmployeeCount {
+    padding: 10px;
+  }
+
+  .EmployeeCount p {
+    font-size: 20px;
+  }
+
+  .EmployeeCount h4 {
+    font-size: 14px;
+  }
+}
