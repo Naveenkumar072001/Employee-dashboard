@@ -1,0 +1,151 @@
+.table-container {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  margin: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table th {
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px;
+}
+
+table td {
+  background-color: #fff;
+  color: #333;
+  padding: 8px;
+  text-align: center;
+}
+
+th {
+  background-color: #3498db;
+  color: #ffffff;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #e0e0e0;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 100;
+  box-shadow: 0 0 0 transparent;
+}
+
+.notification-popup {
+  padding: 20px;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+}
+
+.tick-mark {
+  color: green;
+  font-size: 48px;
+  margin: 10px 0;
+}
+.done-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 10px;
+}
+.page-container {
+  background-color: #f7f7f7;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.page-title {
+  font-size: 24px;
+  color: #333;
+}
+.payment-details {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.payment-details p {
+  margin: 0;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.payment-details .name-amount {
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.payment-details .payment-method {
+  display: flex;
+  align-items: center;
+}
+
+.payment-details label {
+  font-weight: bold;
+  color: #333;
+}
+.payment-details input[type="radio"] {
+  margin-right: 5px;
+}
+
+.payment-details button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.payment-details button:hover {
+  background-color: #0056b3;
+}
+.payment-details.paid {
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+}
+#rename {
+  margin-left: 105px;
+  margin-bottom: 10px;
+}

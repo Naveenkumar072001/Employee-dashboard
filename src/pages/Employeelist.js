@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import "./Employeelist.css";
 
 function EmployeeList({ employees, onDeleteEmployee, onUpdateEmployee }) {
@@ -8,8 +8,12 @@ function EmployeeList({ employees, onDeleteEmployee, onUpdateEmployee }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedEmployee, setEditedEmployee] = useState(null);
   const [viewEmployeeId, setViewEmployeeId] = useState(null);
-
-  // Filter employees based on the search input
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+  const navigate = useNavigate();
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [employees]);
   const filteredEmployees = employees.filter((employee) => {
     const searchValue = searchInput.toLowerCase();
     return (
@@ -18,9 +22,31 @@ function EmployeeList({ employees, onDeleteEmployee, onUpdateEmployee }) {
       employee.contact.includes(searchValue)
     );
   });
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentEmployees = filteredEmployees.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
 
+  const totalPageCount = Math.ceil(filteredEmployees.length / itemsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+  const handlePreviousClick = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextClick = () => {
+    if (currentPage < totalPageCount) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
   const handleSaveClick = (editedEmployee, index) => {
-    onUpdateEmployee(editedEmployee, index); // Call the update function with updated data and index
+    onUpdateEmployee(editedEmployee, index);
     setIsEditing(false);
     setEditedEmployee(null);
   };
@@ -40,43 +66,53 @@ function EmployeeList({ employees, onDeleteEmployee, onUpdateEmployee }) {
   const handleBackToEmployeeListClick = () => {
     setViewEmployeeId(null);
   };
+
+  const handleConvertClick = (employee) => {
+    const { firstname } = employee;
+    navigate(`/EmployeeDetails1?studentName=${encodeURIComponent(firstname)}`);
+  };
+
   return (
     <>
+       
+       
+        
+      
       {viewEmployeeId === null ? (
         <div>
-          <input
-            type="text"
-            placeholder="Search by name or contact"
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-          />
-        </div>
-      ) : (
-        <button onClick={handleBackToEmployeeListClick}>
-          Back to Student List
-        </button>
-      )}
-
-      {viewEmployeeId === null ? (
-        <div>
-          <h2>STUDENTS LIST</h2>
+          <h2 className="head">STUDENTS LIST</h2>
           <div className="box">
-            <Link className="one" to="/Employeelist">
-              <i class="fa-solid fa-users"></i>
-              <h2>View Studentlist</h2>
+            <Link className="one" to="/EmployeeDetails">
+              <i id="add1" class="fa-solid fa-users"></i>
+              <h2>Add Student</h2>
             </Link>
-            <Link className="two" to="/Employeelist1">
-              <i class="fa-solid fa-users"></i>
-              <h2>View Employeelist</h2>
+            <Link className="two" to="/Employeelist">
+              <i id="view1" class="fa-solid fa-users"></i>
+              <h2>View Student</h2>
             </Link>
           </div>
-
+          {viewEmployeeId === null ? (
+            <div>
+              <input
+                className="search_box1"
+                type="text"
+                placeholder="Search by name or contact"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                style={{ width: "250px" }}
+              />
+            </div>
+          ) : (
+            <button onClick={handleBackToEmployeeListClick}>
+              Back to Student List
+            </button>
+          )}
           <table className="EmployeeTable">
             <thead>
               <tr>
                 <th>ID</th>
+                <th>Photo</th>
                 <th>First Name</th>
-                <th>Last Name</th>
                 <th>Father Name</th>
                 <th>Mother Name</th>
                 <th>Email</th>
@@ -100,14 +136,41 @@ function EmployeeList({ employees, onDeleteEmployee, onUpdateEmployee }) {
                 <th>Degree</th>
                 <th>CGPA</th>
                 <th>PassedOut Year</th>
-                <th>Photo</th>
+
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {filteredEmployees.map((employee, index) => (
+              {currentEmployees.map((employee, index) => (
                 <tr key={index}>
                   <td>{employee.id}</td>
+                  <td>
+                    {isEditing &&
+                    editedEmployee &&
+                    editedEmployee.id === employee.id ? (
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onload = (event) => {
+                              setEditedEmployee({
+                                ...editedEmployee,
+                                photo: event.target.result,
+                              });
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                      />
+                    ) : (
+                      employee.photo && (
+                        <img src={employee.photo} alt={` ${employee.name}`} />
+                      )
+                    )}
+                  </td>
                   <td>
                     {isEditing &&
                     editedEmployee &&
@@ -123,27 +186,10 @@ function EmployeeList({ employees, onDeleteEmployee, onUpdateEmployee }) {
                         }
                       />
                     ) : (
-                      employee.firstname
+                      `${employee.firstname} ${employee.lastname}`
                     )}
                   </td>
-                  <td>
-                    {isEditing &&
-                    editedEmployee &&
-                    editedEmployee.id === employee.id ? (
-                      <input
-                        type="text"
-                        value={editedEmployee.lastname}
-                        onChange={(e) =>
-                          setEditedEmployee({
-                            ...editedEmployee,
-                            lastname: e.target.value,
-                          })
-                        }
-                      />
-                    ) : (
-                      employee.lastname
-                    )}
-                  </td>
+
                   <td>
                     {isEditing &&
                     editedEmployee &&
@@ -569,33 +615,7 @@ function EmployeeList({ employees, onDeleteEmployee, onUpdateEmployee }) {
                       employee.passedout
                     )}
                   </td>
-                  <td>
-                    {isEditing &&
-                    editedEmployee &&
-                    editedEmployee.id === employee.id ? (
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => {
-                          const file = e.target.files[0];
-                          if (file) {
-                            const reader = new FileReader();
-                            reader.onload = (event) => {
-                              setEditedEmployee({
-                                ...editedEmployee,
-                                photo: event.target.result,
-                              });
-                            };
-                            reader.readAsDataURL(file);
-                          }
-                        }}
-                      />
-                    ) : (
-                      employee.photo && (
-                        <img src={employee.photo} alt={` ${employee.name}`} />
-                      )
-                    )}
-                  </td>
+
                   <td>
                     {isEditing &&
                     editedEmployee &&
@@ -605,13 +625,13 @@ function EmployeeList({ employees, onDeleteEmployee, onUpdateEmployee }) {
                           className="savebtn"
                           onClick={() => handleSaveClick(editedEmployee, index)}
                         >
-                          Save
+                          <i className="fa fa-check"></i>
                         </button>
                         <button
                           className="cancelbtn"
                           onClick={handleCancelClick}
                         >
-                          Cancel
+                          <i className="fa fa-times"></i>
                         </button>
                       </>
                     ) : (
@@ -619,7 +639,7 @@ function EmployeeList({ employees, onDeleteEmployee, onUpdateEmployee }) {
                         className="editbtn"
                         onClick={() => handleEditClick(employee)}
                       >
-                        Edit
+                        <i className="fa fa-pencil"></i>
                       </button>
                     )}
 
@@ -628,25 +648,55 @@ function EmployeeList({ employees, onDeleteEmployee, onUpdateEmployee }) {
                         onClick={() => handleViewClick(employee.id)}
                         className="viewbtn"
                       >
-                        View
+                        <i className="fa fa-eye"></i>
                       </button>
                     ) : null}
                     <button
                       className="deletebtn"
                       onClick={() => onDeleteEmployee(index)}
                     >
-                      Delete
+                      <i className="fa fa-trash"></i>
+                    </button>
+                    <button
+                      className="convertbtn"
+                      onClick={() => handleConvertClick(employee)}
+                    >
+                      Convert Employee
                     </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+
+          <div className="pagination">
+            <button onClick={handlePreviousClick} disabled={currentPage === 1}>
+              Previous
+            </button>
+            {Array.from({ length: totalPageCount }, (_, index) => (
+              <button
+                key={index}
+                className={currentPage === index + 1 ? "active" : ""}
+                onClick={() => handlePageChange(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
+
+            <button
+              onClick={handleNextClick}
+              disabled={currentPage === totalPageCount}
+            >
+              Next
+            </button>
+          </div>
         </div>
       ) : (
         <div>
           <h2>Student Details</h2>
-
+          <button onClick={handleBackToEmployeeListClick}>
+          Back to Student List
+        </button>
           {viewEmployeeId !== null ? (
             <>
               {employees.map((employee) => {
@@ -656,8 +706,11 @@ function EmployeeList({ employees, onDeleteEmployee, onUpdateEmployee }) {
                       <div className="student-photo">
                         {employee.photo && (
                           <img
+                            id="photo_2"
                             src={employee.photo}
                             alt={`${employee.firstname} ${employee.lastname}`}
+                            width="250"
+                            height="250"
                           />
                         )}
                       </div>
@@ -771,15 +824,6 @@ function EmployeeList({ employees, onDeleteEmployee, onUpdateEmployee }) {
                           <span className="bold-text">Passed Out Year:</span>{" "}
                           {employee.passedout}
                         </p>
-                        {/* <p>
-                        Photo:{" "}
-                        {employee.photo && (
-                          <img
-                            src={employee.photo}
-                            alt={`${employee.firstname} ${employee.lastname}`}
-                          />
-                        )}
-                      </p> */}
                       </div>
                     </div>
                   );

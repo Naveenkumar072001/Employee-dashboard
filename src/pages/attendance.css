@@ -1,0 +1,86 @@
+x.Sanbox {
+  text-align: center;
+  padding: 20px;
+  font-family: Consolas, monaco, monospace;
+}
+
+.Sanbox h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.san1 {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.san1 label {
+  display: inline-block;
+  width: 150px;
+  font-weight: bold;
+  font-family: Consolas, monaco, monospace;
+}
+
+.student-checkboxes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  max-width: 400px;
+}
+
+.student-checkboxes label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+}
+
+.student-checkboxes input[type="checkbox"] {
+  margin: 0;
+  transform: scale(1.2);
+}
+.san1 select {
+  width: 50%;
+  padding: 8px;
+  margin-top: 4px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.san1 input[type="date"],
+.san1 input[type="time"],
+.san1 input[type="text"] {
+  width: 50%;
+  padding: 8px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.san1 select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: transparent;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='gray' xmlns='http://www.w3.org/2000/svg' height='24' width='24' viewBox='0 0 24 24'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+.san1 button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.san1 button[type="submit"]:hover {
+  background-color: #0056b3;
+}

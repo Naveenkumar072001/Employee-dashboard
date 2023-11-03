@@ -3,21 +3,45 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard.jsx";
-import Analytics from "./pages/Analytics.jsx";
-import Product from "./pages/Product.jsx";
-import ProductList from "./pages/ProductList.jsx";
+import GSTBilling from "./pages/GSTBilling";
+import { NonGST } from "./pages/Non-GSTBilling";
 import "./pages/Employeedetails.css";
 import AddEmployee from "./pages/EmployeeDetails";
 import EmployeeList from "./pages/Employeelist";
-import Employee from "./pages/Employee";
 import EmployeeList1 from "./pages/Employeelist1";
-import AddEmployee1 from "./pages/Employeedeials1";
+import AddEmployee1 from "./pages/EmployeeDetials1";
+import AttendanceForm from "./pages/Attendanceform";
+import ViewAttendance from "./pages/viewattendance";
+import PaymentDetails from "./pages/Cashin"
+import Customer from "./pages/Customer";
+import { Display } from "./pages/Display";
+import InvoiceMaster from "./pages/Invoice";
 
 const App = () => {
+  const [currentBalance, setCurrentBalance] = useState(0);
   const [employees, setEmployees] = useState([]);
   const [lastEmployeeId, setLastEmployeeId] = useState(0);
   const [employees1, setEmployees1] = useState([]);
   const [lastEmployeeId1, setLastEmployeeId1] = useState(0);
+  const [attendanceRecords, setAttendanceRecords] = useState([]); 
+  const [customerData, setCustomerData] = useState([]);
+  const [invoiceNo, setInvoiceNo] = useState("KIT/23/008");
+  const [cgstRate, setCGSTRate] = useState(9);
+  const [sgstRate, setSGSTRate] = useState(9);
+  const [igstRate, setIGSTRate] = useState(18); 
+
+  const handleCustomerCreate = (customer) => {
+    setCustomerData([...customerData, customer]);
+  };
+  const handleAttendanceSubmit = (attendanceRecord) => {
+    setAttendanceRecords([...attendanceRecords, attendanceRecord]);
+  };
+
+  const handleDeleteRecord = (index) => {
+    const updatedRecords = [...attendanceRecords];
+    updatedRecords.splice(index, 1); 
+    setAttendanceRecords(updatedRecords);
+  };
 
   const handleAddEmployee = (newEmployee) => {
     const newEmployeeId = lastEmployeeId + 1;
@@ -27,7 +51,7 @@ const App = () => {
     ]);
     setLastEmployeeId(newEmployeeId);
 
-    // Save the updated employees list and lastEmployeeId to local storage
+   
     localStorage.setItem(
       "employees",
       JSON.stringify([...employees, newEmployee])
@@ -41,12 +65,12 @@ const App = () => {
       ...employees1,
       {
         ...newEmployee1,
-        id: `STU${newEmployeeId1.toString().padStart(3, "0")}`,
+        id: `EMP${newEmployeeId1.toString().padStart(3, "0")}`,
       },
     ]);
     setLastEmployeeId1(newEmployeeId1);
 
-    // Save the updated employees list and lastEmployeeId to local storage
+   
     localStorage.setItem(
       "employees1",
       JSON.stringify([...employees1, newEmployee1])
@@ -57,7 +81,6 @@ const App = () => {
   const handleDeleteEmployee = (index) => {
     const updatedEmployees = employees.filter((_, i) => i !== index);
 
-    // Find the highest ID among remaining employees
     let highestId = 0;
     updatedEmployees.forEach((employee) => {
       const employeeIdNumber = parseInt(employee.id.substr(3));
@@ -66,13 +89,10 @@ const App = () => {
       }
     });
 
-    // Set the lastEmployeeId to the highest ID
     setLastEmployeeId(highestId);
 
-    // Update the employees list
     setEmployees(updatedEmployees);
 
-    // Save the updated employees list and lastEmployeeId to local storage
     localStorage.setItem("employees", JSON.stringify(updatedEmployees));
     localStorage.setItem("lastEmployeeId", highestId.toString());
   };
@@ -80,7 +100,6 @@ const App = () => {
   const handleDeleteEmployee1 = (index) => {
     const updatedEmployees1 = employees1.filter((_, i) => i !== index);
 
-    // Find the highest ID among remaining employees
     let highestId = 0;
     updatedEmployees1.forEach((employee) => {
       const employeeIdNumber1 = parseInt(employee.id.substr(3));
@@ -89,13 +108,10 @@ const App = () => {
       }
     });
 
-    // Set the lastEmployeeId to the highest ID
     setLastEmployeeId1(highestId);
 
-    // Update the employees list
     setEmployees1(updatedEmployees1);
 
-    // Save the updated employees list and lastEmployeeId to local storage
     localStorage.setItem("employees1", JSON.stringify(updatedEmployees1));
     localStorage.setItem("lastEmployeeId1", highestId.toString());
   };
@@ -113,45 +129,37 @@ const App = () => {
   };
 
   useEffect(() => {
-    // Load employees from local storage on component mount
     const savedEmployees = JSON.parse(localStorage.getItem("employees"));
     if (savedEmployees) {
       setEmployees(savedEmployees);
     }
 
-    // Load the last assigned employee ID from local storage on component mount
     const savedLastEmployeeId = localStorage.getItem("lastEmployeeId");
     if (savedLastEmployeeId) {
       setLastEmployeeId(parseInt(savedLastEmployeeId));
     } else {
-      // If it's not found in local storage, set it to 0
       setLastEmployeeId(0);
     }
   }, []);
   useEffect(() => {
-    // Load employees from local storage on component mount
     const savedEmployees1 = JSON.parse(localStorage.getItem("employees1"));
     if (savedEmployees1) {
       setEmployees1(savedEmployees1);
     }
 
-    // Load the last assigned employee ID from local storage on component mount
     const savedLastEmployeeId1 = localStorage.getItem("lastEmployeeId1");
     if (savedLastEmployeeId1) {
       setLastEmployeeId1(parseInt(savedLastEmployeeId1));
     } else {
-      // If it's not found in local storage, set it to 0
       setLastEmployeeId1(0);
     }
   }, []);
 
   useEffect(() => {
-    // Save employees to local storage whenever it changes
     localStorage.setItem("employees", JSON.stringify(employees));
   }, [employees]);
 
   useEffect(() => {
-    // Save employees to local storage whenever it changes
     localStorage.setItem("employees1", JSON.stringify(employees1));
   }, [employees1]);
 
@@ -169,6 +177,7 @@ const App = () => {
           <Route
             exact
             path="/EmployeeDetails"
+           
             element={<AddEmployee onAddEmployee={handleAddEmployee} />}
           />
           <Route
@@ -184,6 +193,7 @@ const App = () => {
                 employees={employees}
                 onDeleteEmployee={handleDeleteEmployee}
                 onUpdateEmployee={onUpdateEmployee}
+                setCurrentBalance={setCurrentBalance}
               />
             }
           />
@@ -194,14 +204,69 @@ const App = () => {
                 employees={employees1}
                 onDeleteEmployee={handleDeleteEmployee1}
                 onUpdateEmployee={onUpdateEmployee1}
+                setCurrentBalance={setCurrentBalance}
               />
             }
           />
 
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/Employee" element={<Employee />} />
-          <Route path="/product" element={<Product />} />
-          <Route path="/productList" element={<ProductList />} />
+          <Route
+            path="/AttendanceForm"
+            element={
+              <AttendanceForm
+                employees={employees}
+                onAttendanceSubmit={handleAttendanceSubmit}
+                setCurrentBalance={setCurrentBalance}
+              />
+            }
+          />
+          <Route
+            path="/ViewAttendance"
+            element={
+              <ViewAttendance
+                attendanceRecords={attendanceRecords}
+                onDeleteRecord={handleDeleteRecord}
+              />
+            }
+          />
+           <Route path="/cashin" element={<PaymentDetails employees={employees}/>}/>
+
+
+          <Route
+            path="/gstbilling"
+            element={
+              <GSTBilling
+                invoiceNo={invoiceNo}
+                cgstRate={cgstRate}
+                sgstRate={sgstRate}
+                igstRate={igstRate}
+                setCGSTRate={setCGSTRate}
+                setSGSTRate={setSGSTRate}
+                setIGSTRate={setIGSTRate}
+              />
+            }
+          />
+          <Route path="/nongstbilling" element={<NonGST />} />
+          
+         
+          
+          <Route
+            path="customer"
+            element={<Customer onCustomerCreate={handleCustomerCreate} />}
+          />
+          
+          <Route path="display" element={<Display />} />
+          <Route
+            path="invoice"
+            element={
+              <InvoiceMaster
+                invoiceNo={invoiceNo}
+                setInvoiceNo={setInvoiceNo}
+                setCGSTRate={setCGSTRate}
+                setSGSTRate={setSGSTRate}
+                setIGSTRate={setIGSTRate}
+              />
+            }
+          />
         </Routes>
       </Sidebar>
     </BrowserRouter>

@@ -8,19 +8,30 @@ function EmployeeList1({ employees, onDeleteEmployee, onUpdateEmployee }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedEmployee, setEditedEmployee] = useState(null);
   const [viewEmployeeId, setViewEmployeeId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
-  // Filter employees based on the search input
   const filteredEmployees1 = employees.filter((employee) => {
     const searchValue = searchInput.toLowerCase();
     return (
       employee.firstname.toLowerCase().includes(searchValue) ||
-      employee.lastname.toLowerCase().includes(searchValue) ||
-      employee.contact.includes(searchValue)
+      employee.lastname.toLowerCase().includes(searchValue)
     );
   });
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentEmployees = filteredEmployees1.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   const handleSaveClick = (editedEmployee, index) => {
-    onUpdateEmployee(editedEmployee, index); // Call the update function with updated data and index
+    onUpdateEmployee(editedEmployee, index);
     setIsEditing(false);
     setEditedEmployee(null);
   };
@@ -42,50 +53,91 @@ function EmployeeList1({ employees, onDeleteEmployee, onUpdateEmployee }) {
   };
   return (
     <>
+     
+       
+     
       {viewEmployeeId === null ? (
         <div>
-          <input
-            type="text"
-            placeholder="Search by name or contact"
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-          />
-        </div>
-      ) : (
-        <button onClick={handleBackToEmployeeListClick}>
-          Back to employee List
-        </button>
-      )}
-
-      {viewEmployeeId === null ? (
-        <div>
-          <h2>EMPLOYEE LIST</h2>
+          <h2 className="head">EMPLOYEE LIST</h2>
           <div className="box">
-            <Link className="one" to="/EmployeeList">
-              <i class="fa-solid fa-users"></i>
-              <h2>View Studentlist</h2>
+            <Link className="one" to="/EmployeeDetails1">
+              <i id="add1" class="fa-solid fa-users"></i>
+              <h2>Add Employee</h2>
             </Link>
             <Link className="two" to="/EmployeeList1">
-              <i class="fa-solid fa-users"></i>
-              <h2>View Employeelist</h2>
+              <i id="view1" class="fa-solid fa-users"></i>
+              <h2>View Employee</h2>
             </Link>
           </div>
-          
+
+          {viewEmployeeId === null ? (
+            <div>
+              <input
+                className="search_box1"
+                type="text"
+                placeholder="Search by name or contact"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                style={{ width: "250px" }}
+              />
+            </div>
+          ) : (
+            <button onClick={handleBackToEmployeeListClick}>
+              Back to employee List
+            </button>
+          )}
           <table className="EmployeeTable">
             <thead>
               <tr>
                 <th>ID</th>
+                <th>photo</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Father Name</th>
                 <th>Mother Name</th>
+                <th>Date of Birth</th>
+                <th>Email</th>
+                <th>ContactNumber</th>
+                <th>Designation</th>
+                <th>Salary</th>
+                <th>dateOfJoining</th>
+                <th>dateOfRelieving</th>
+                <th>Experience</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {filteredEmployees1.map((employee, index) => (
+              {currentEmployees.map((employee, index) => (
                 <tr key={index}>
                   <td>{employee.id}</td>
+                  <td>
+                    {isEditing &&
+                    editedEmployee &&
+                    editedEmployee.id === employee.id ? (
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onload = (event) => {
+                              setEditedEmployee({
+                                ...editedEmployee,
+                                photo: event.target.result,
+                              });
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                      />
+                    ) : (
+                      employee.photo && (
+                        <img src={employee.photo} alt={` ${employee.name}`} />
+                      )
+                    )}
+                  </td>
+
                   <td>
                     {isEditing &&
                     editedEmployee &&
@@ -158,6 +210,150 @@ function EmployeeList1({ employees, onDeleteEmployee, onUpdateEmployee }) {
                       employee.mothername
                     )}
                   </td>
+                  <td>
+                    {isEditing &&
+                    editedEmployee &&
+                    editedEmployee.id === employee.id ? (
+                      <input
+                        type="date"
+                        value={editedEmployee.dob}
+                        onChange={(e) =>
+                          setEditedEmployee({
+                            ...editedEmployee,
+                            dateOfBirth: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      employee.dateOfBirth
+                    )}
+                  </td>
+                  <td>
+                    {isEditing &&
+                    editedEmployee &&
+                    editedEmployee.id === employee.id ? (
+                      <input
+                        type="email"
+                        value={editedEmployee.email}
+                        onChange={(e) =>
+                          setEditedEmployee({
+                            ...editedEmployee,
+                            email: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      employee.email
+                    )}
+                  </td>
+                  <td>
+                    {isEditing &&
+                    editedEmployee &&
+                    editedEmployee.id === employee.id ? (
+                      <input
+                        type="tel"
+                        value={editedEmployee.contactNumber}
+                        onChange={(e) =>
+                          setEditedEmployee({
+                            ...editedEmployee,
+                            contactNumber: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      employee.contactNumber
+                    )}
+                  </td>
+                  <td>
+                    {isEditing &&
+                    editedEmployee &&
+                    editedEmployee.id === employee.id ? (
+                      <input
+                        type="text"
+                        value={editedEmployee.designation}
+                        onChange={(e) =>
+                          setEditedEmployee({
+                            ...editedEmployee,
+                            designation: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      employee.designation
+                    )}
+                  </td>
+                  <td>
+                    {isEditing &&
+                    editedEmployee &&
+                    editedEmployee.id === employee.id ? (
+                      <input
+                        type="text"
+                        value={editedEmployee.salary}
+                        onChange={(e) =>
+                          setEditedEmployee({
+                            ...editedEmployee,
+                            salary: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      employee.salary
+                    )}
+                  </td>
+                  <td>
+                    {isEditing &&
+                    editedEmployee &&
+                    editedEmployee.id === employee.id ? (
+                      <input
+                        type="date"
+                        value={editedEmployee.dateOfJoining}
+                        onChange={(e) =>
+                          setEditedEmployee({
+                            ...editedEmployee,
+                            dateOfJoining: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      employee.dateOfJoining
+                    )}
+                  </td>
+                  <td>
+                    {isEditing &&
+                    editedEmployee &&
+                    editedEmployee.id === employee.id ? (
+                      <input
+                        type="date"
+                        value={editedEmployee.dateOfRelieving}
+                        onChange={(e) =>
+                          setEditedEmployee({
+                            ...editedEmployee,
+                            dateOfRelieving: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      employee.dateOfRelieving
+                    )}
+                  </td>
+                  <td>
+                    {isEditing &&
+                    editedEmployee &&
+                    editedEmployee.id === employee.id ? (
+                      <input
+                        type="number"
+                        value={editedEmployee.experience}
+                        onChange={(e) =>
+                          setEditedEmployee({
+                            ...editedEmployee,
+                            experience: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      employee.experience
+                    )}
+                  </td>
 
                   <td>
                     {isEditing &&
@@ -165,36 +361,83 @@ function EmployeeList1({ employees, onDeleteEmployee, onUpdateEmployee }) {
                     editedEmployee.id === employee.id ? (
                       <>
                         <button
+                          className="savebtn"
                           onClick={() => handleSaveClick(editedEmployee, index)}
                         >
-                          Save
+                          <i className="fa fa-check"></i>
                         </button>
-                        <button onClick={handleCancelClick}>Cancel</button>
+                        <button
+                          className="cancelbtn"
+                          onClick={handleCancelClick}
+                        >
+                          {" "}
+                          <i className="fa fa-times"></i>{" "}
+                        </button>
                       </>
                     ) : (
-                      <button onClick={() => handleEditClick(employee)}>
-                        Edit
+                      <button
+                        className="editbtn"
+                        onClick={() => handleEditClick(employee)}
+                      >
+                        <i className="fa fa-pencil"></i>
                       </button>
                     )}
 
                     {viewEmployeeId === null ? (
-                      <button onClick={() => handleViewClick(employee.id)}>
-                        View
+                      <button
+                        className="viewbtn"
+                        onClick={() => handleViewClick(employee.id)}
+                      >
+                        <i className="fa fa-eye"></i>
                       </button>
                     ) : null}
-                    <button onClick={() => onDeleteEmployee(index)}>
-                      Delete
+
+                    <button
+                      className="deletebtn"
+                      onClick={() => onDeleteEmployee(index)}
+                    >
+                      <i className="fa fa-trash"></i>
                     </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          <div className="pagination">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              Previous Page
+            </button>
+            {Array.from({
+              length: Math.ceil(filteredEmployees1.length / itemsPerPage),
+            }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => handlePageChange(index + 1)}
+                className={currentPage === index + 1 ? "active" : ""}
+              >
+                {index + 1}
+              </button>
+            ))}
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={
+                currentPage ===
+                Math.ceil(filteredEmployees1.length / itemsPerPage)
+              }
+            >
+              Next Page
+            </button>
+          </div>
         </div>
       ) : (
         <div>
           <h2>Employee Details</h2>
-
+          <button onClick={handleBackToEmployeeListClick}>
+          Back to employee List
+        </button>
           {viewEmployeeId !== null ? (
             <>
               {employees.map((employee) => {
@@ -204,8 +447,11 @@ function EmployeeList1({ employees, onDeleteEmployee, onUpdateEmployee }) {
                       <div className="student-photo">
                         {employee.photo && (
                           <img
+                            className="photo_1"
                             src={employee.photo}
                             alt={`${employee.firstname} ${employee.lastname}`}
+                            width="250"
+                            height="250"
                           />
                         )}
                       </div>
@@ -215,6 +461,7 @@ function EmployeeList1({ employees, onDeleteEmployee, onUpdateEmployee }) {
                           <span className="bold-text">Name:</span>{" "}
                           {employee.firstname} {employee.lastname}
                         </p>
+
                         <p>
                           <span className="bold-text">Email: </span>
                           {employee.email}
@@ -226,6 +473,38 @@ function EmployeeList1({ employees, onDeleteEmployee, onUpdateEmployee }) {
                         <p>
                           <span className="bold-text">Mother Name:</span>{" "}
                           {employee.mothername}
+                        </p>
+                        <p>
+                          <span className="bold-text">Date of Birth:</span>{" "}
+                          {employee.dateOfBirth}
+                        </p>
+                        <p>
+                          <span className="bold-text">Email:</span>{" "}
+                          {employee.email}
+                        </p>
+                        <p>
+                          <span className="bold-text">Contact Number:</span>{" "}
+                          {employee.contactNumber}
+                        </p>
+                        <p>
+                          <span className="bold-text">Designation:</span>{" "}
+                          {employee.designation}
+                        </p>
+                        <p>
+                          <span className="bold-text">Salary:</span>{" "}
+                          {employee.salary}
+                        </p>
+                        <p>
+                          <span className="bold-text">DateOfJoining:</span>{" "}
+                          {employee.dateOfJoining}
+                        </p>
+                        <p>
+                          <span className="bold-text">dateOfRelieving:</span>{" "}
+                          {employee.dateOfRelieving}
+                        </p>
+                        <p>
+                          <span className="bold-text">Experience:</span>{" "}
+                          {employee.experience}
                         </p>
                       </div>
                     </div>

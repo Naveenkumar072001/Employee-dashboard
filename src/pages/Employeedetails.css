@@ -5,9 +5,6 @@
   background: rgba(255, 255, 255, 0.435);
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-
-  /* font-family: monospace ; */
-  /* font-family: Consolas, monaco, monospace; */
 }
 
 h2 {
@@ -18,7 +15,6 @@ h2 {
   font-weight: 400;
 }
 .box {
-  /* border: 1px solid black;  */
   width: 600px;
   display: flex;
   flex-direction: row;
@@ -26,7 +22,7 @@ h2 {
   margin-left: 250px;
 }
 .one {
-  width: 250px;
+  width: 550px;
   height: 100px;
   background-color: whitesmoke;
   margin: 10px;
@@ -37,8 +33,27 @@ h2 {
   box-shadow: rgba(2, 30, 82, 0.1) 0px 4px 12px;
   cursor: pointer;
 }
+#add1 {
+  margin-left: -10px;
+  font-size: 50px;
+  padding: 25px;
+  color: orange;
+  margin-right: 20px;
+  background-color: rgb(241, 15, 147);
+  box-shadow: rgba(2, 30, 82, 0.1) 0px 4px 12px;
+}
+#view1 {
+  margin-left: -10px;
+  font-size: 50px;
+  padding: 25px;
+  color: orange;
+  margin-right: 20px;
+  background-color: rgb(15, 237, 241);
+  box-shadow: rgba(2, 30, 82, 0.1) 0px 4px 12px;
+}
 .two {
   width: 250px;
+  padding-right: 10px;
   height: 100px;
   background-color: whitesmoke;
   margin: 10px;
@@ -51,44 +66,20 @@ h2 {
 }
 .one h2 {
   font-size: 20px;
-  /* margin-right: -280px; */
-  /* margin-top: -10px; */
   color: black;
 }
 .two h2 {
   font-size: 20px;
-  /* margin-right: -280px; */
-  /* margin-top: -10px; */
   color: black;
 }
 
-
-
 label {
-  
   display: inline-block;
   width: 15%;
   margin-top: 10px;
   color: black;
   font-weight: bold;
 }
-/* label {
-  display: inline-block;
-  width: 150px;
-  width: 15%;
-
-  font-weight: bold;
-  text-align: right;
-  padding-right: 50px;
-  font-size: 18px;
-} */
-
-/* input {
-  padding: 12px 10px 12px;
-  margin-bottom: 5px;
-  outline: none;
-  width: 800px;
-} */
 
 input[type="text"],
 input[type="email"],
@@ -96,7 +87,6 @@ input[type="number"],
 input[type="tel"],
 textarea {
   display: inline-block;
-  /* width: 95%; */
   width: 75%;
   padding: 10px;
   margin-top: 10px;
@@ -118,7 +108,7 @@ input[type="checkbox"] {
 
 button[type="submit"] {
   display: block;
-  width: 100%;
+  width: 170px;
   padding: 10px;
   margin-top: 20px;
   border: none;
@@ -147,4 +137,3 @@ label input[type="radio"]::after {
 input[type="radio"]:checked + label {
   color: #007bff;
 }
-

@@ -6,6 +6,26 @@
   justify-content: space-between;
   margin-left: 250px;
 }
+#add {
+  margin-left: -10px;
+  /* border: 1px solid black; */
+  font-size: 50px;
+  padding: 25px;
+  color: orange;
+  margin-right: 20px;
+  background-color: rgb(241, 15, 147);
+  box-shadow: rgba(2, 30, 82, 0.1) 0px 4px 12px;
+}
+#view {
+  margin-left: -10px;
+  /* border: 1px solid black; */
+  font-size: 50px;
+  padding: 25px;
+  color: orange;
+  margin-right: 20px;
+  background-color: rgb(15, 237, 241);
+  box-shadow: rgba(2, 30, 82, 0.1) 0px 4px 12px;
+}
 .one {
   width: 250px;
   height: 100px;
@@ -41,7 +61,7 @@
 .EmployeeTable td {
   border: 1px solid black;
   padding: 8px;
-  text-align: left;
+  text-align: center;
   /* font-family: monospace ; */
   font-family: Consolas, monaco, monospace;
   font-weight: 300;
@@ -85,7 +105,10 @@
 .student-details {
   display: flex;
   align-items: center; /* Vertically center the photo */
-  border: 1px solid red;
+  background: rgba(255, 255, 255, 0.435);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+
   padding: 20px;
   margin: 20px 0;
 }
@@ -101,26 +124,74 @@
 }
 .bold-text {
   font-weight: bold;
+  line-height: 25px;
+}
+.savebtn {
+  border: none;
+  color: rgb(81, 206, 35);
+  font-size: 20px;
+}
+.cancelbtn {
+  border: none;
+  color: #f04141;
+  font-size: 20px;
 }
 .editbtn {
-  background-color: rgb(81, 206, 35);
-  border: none;
-  width: 50px;
-height: 20px;
-
+  color: white;
+  border: 1px solid black;
+  padding: 5px;
+  background-color: orange;
+  font-size: 20px;
+  border-radius: 3px;
+  border-color: orange;
+  margin-left: -40px;
 }
+
 .viewbtn {
-  background-color: lightskyblue;
-  border: none;
-  width: 50px;
-height: 20px;
+  border: 1px solid black;
+  color: white;
+  font-size: 20px;
+  background-color: rgb(40, 181, 228);
+  padding: 5px;
+  border-color: rgb(40, 181, 228);
+  border-radius: 3px;
+  margin-left: 10px;
 }
 .deletebtn {
+  margin-left: 96px;
+  color: white;
+  border: 1px solid black;
   background-color: rgb(240, 65, 65);
-  border: none;
-width: 50px;
-height: 20px;
+  font-size: 20px;
+  padding: 2px;
+  border-radius: 3px;
+  border-color: #f04141;
+  position: relative;
+  top: -35px;
 }
-/* button {
-  background-color: pink;
-} */
+.photo_1 {
+  border-radius: 6px;
+}
+#photo_2 {
+  margin-top: -250px;
+  border-radius: 6px;
+}
+.head {
+  margin-right: 300px;
+}
+.search_box1 {
+  width: 100px;
+}
+.convertbtn {
+  padding: 5px 15px 5px 15px;
+  margin-top: 5px;
+  padding: 5px 20px 5px 20px;
+  font-weight: 400;
+  font-size: 15px;
+  color: white;
+  border-radius: 4px;
+  position: relative;
+  top: -20px;
+  background-color: green;
+  border: none;
+}

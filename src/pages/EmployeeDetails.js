@@ -9,7 +9,7 @@ import { Create_data } from "../url/url";
   rel="stylesheet"
 ></link>;
 
-function AddEmployee({ onAddEmployee }) {
+function AddEmployee({ onAddEmployee, onAddEmployee2, onAddEmployee3 }) {
   const [firstname, setName] = useState("");
   const [lastname, setPosition] = useState("");
   const [fathername, setFathername] = useState("");
@@ -40,7 +40,6 @@ function AddEmployee({ onAddEmployee }) {
   const [paidAmount, setPaidAmount] = useState(0);
   const [remainingAmount, setRemainingAmount] = useState(30000);
   const [employeeCount, setEmployeeCount] = useState(0);
- 
 
   let post_datas = async () => {
     await axios.post(Create_data, {
@@ -76,8 +75,6 @@ function AddEmployee({ onAddEmployee }) {
     });
   };
 
-  
-
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -90,24 +87,14 @@ function AddEmployee({ onAddEmployee }) {
   };
 
   useEffect(() => {
-    // Calculate the remaining amount whenever paidAmount changes
     const newRemainingAmount = totalAmount - paidAmount;
     setRemainingAmount(newRemainingAmount);
   }, [totalAmount, paidAmount]);
-
-  // useEffect(() => {
-  //   // Load the employee count from local storage on component mount
-  //   const savedCount = localStorage.getItem('employeeCount');
-  //   if (savedCount) {
-  //     setEmployeeCount(parseInt(savedCount));
-  //   }
-  // }, []);
 
   const handleRadioChange = (e) => {
     const value = e.target.value;
     setQualification(value);
 
-    // Show HSC Marks input if "HSC" is selected
     if (value === "HSC");
     setHSCMarks("");
     setHSCSchoolName("");
@@ -194,15 +181,15 @@ function AddEmployee({ onAddEmployee }) {
       <h2>STUDENT ENTRY FORM</h2>
       <div className="box">
         <Link className="one" to="/EmployeeDetails">
-          <i class="fa-solid fa-users"></i>
+          <i id="add" class="fa-solid fa-users"></i>
           <h2>Add Student</h2>
         </Link>
-        <Link className="two" to="/EmployeeDetails1">
-          <i class="fa-solid fa-users"></i>
-          <h2>Add Employee</h2>
+        <Link className="two" to="/Employeelist">
+          <i id="view" class="fa-solid fa-users"></i>
+          <h2>View Student</h2>
         </Link>
       </div>
-      
+
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="firstname">First Name:</label>
@@ -344,7 +331,6 @@ function AddEmployee({ onAddEmployee }) {
               name="qualification"
               value="HSC"
               checked={Qualification === "HSC"}
-              // onChange={() => setQualification("HSC")}
               onChange={handleRadioChange}
             />
             HSC
@@ -355,7 +341,6 @@ function AddEmployee({ onAddEmployee }) {
               name="qualification"
               value="Diploma"
               checked={Qualification === "Diploma"}
-              // onChange={() => setQualification("Diploma")}
               onChange={handleRadioChange}
             />
             Diploma
@@ -478,7 +463,7 @@ function AddEmployee({ onAddEmployee }) {
             type="number"
             id="totalAmount"
             value={totalAmount}
-            readOnly // Make this field read-only
+            readOnly
             onChange={handleTotalAmountChange}
           />
         </div>
